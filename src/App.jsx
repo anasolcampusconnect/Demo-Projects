@@ -45,7 +45,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen font-sans overflow-x-hidden bg-slate-50/50">
+    <div className="relative min-h-screen font-sans overflow-x-clip bg-slate-50/50">
       
       {/* --- BACKGROUND ANIMATIONS (Behind the grid) --- */}
       <div className="fixed inset-0 -z-10 bg-gradient-animate bg-gradient-to-br from-white via-blue-50 to-pink-50 animate-gradient-xy opacity-70" />
@@ -171,7 +171,8 @@ export default function App() {
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           
           {/* LEFT SIDEBAR */}
-          <aside className="w-full lg:w-[320px] shrink-0 lg:sticky lg:top-32 flex flex-col gap-6">
+          {/* LEFT SIDEBAR */}
+          <aside className="w-full lg:w-[320px] shrink-0 lg:sticky lg:top-32 self-start z-20 flex flex-col gap-6">
             
             {/* Search Box */}
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 border border-white shadow-xl shadow-slate-200/50 relative overflow-hidden">
@@ -362,7 +363,7 @@ export default function App() {
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-lg">📧</span>
-                  <a href="mailto:hr@anasol.co.in" className="hover:text-blue-400 transition-colors text-slate-400">hr@anasol.co.in</a>
+                  <a href="mailto:hr@anasolconsultancyservices.com" className="hover:text-blue-400 transition-colors text-slate-400">hr@anasolconsultancyservices.com</a>
                 </li>
               </ul>
             </div>
