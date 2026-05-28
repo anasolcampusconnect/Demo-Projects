@@ -136,7 +136,7 @@ export const projectsData = [
     {
     title: "Restaurant QR Code Portal",
     category: "Restaurant",
-    description: "Secure Restaurant administrative console managing high-compliance Restaurant Menu, identity audits, and automated document issuance pipelines.",
+    description: "Smart restaurant ordering platform that allows customers to scan QR codes at their tables, browse digital menus, place orders instantly, and streamline restaurant operations.",
     url: "https://anasolcampusconnect.github.io/Restaurant-QRCode/",
     status: "Live",
     tech: ["React", "JavaScript", "Tailwind CSS",],

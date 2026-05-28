@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Eye, ExternalLink, AlertCircle, ArrowRight, Key, User, Copy, Check, LayoutGrid, Briefcase, Code, Shield, Sparkles, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projectsData } from './data/projects.js';
@@ -9,6 +9,27 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Projects');
   const [copiedField, setCopiedField] = useState(null);
+
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Hide if scrolling down and past the first 100px. Show if scrolling up.
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsHeaderVisible(false);
+      } else {
+        setIsHeaderVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
   
   const handleCopy = (text, projectId, field) => {
     navigator.clipboard.writeText(text);
@@ -56,7 +77,9 @@ export default function App() {
       </div>
 
       {/* --- NAVBAR --- */}
-      <nav className="sticky top-0 z-50 w-full bg-slate-900 shadow-xl border-b border-slate-800">
+      {/* --- NAVBAR --- */}
+        {/* --- NAVBAR --- */}
+      <nav className={`fixed top-0 left-0 z-50 w-full bg-slate-900 shadow-xl border-b border-slate-800 transition-transform duration-300 ease-in-out ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'}`}> 
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
           <div className="flex h-24 items-center justify-between">
             <div className="flex items-center gap-3">
@@ -94,14 +117,14 @@ export default function App() {
       </nav>
 
       {/* --- PHOTOGRAPHIC HERO SECTION --- */}
-      <section 
-        style={{ 
-          backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop')`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover'
-        }}
-        className="relative w-full py-28 flex items-center justify-center bg-fixed shadow-2xl z-10"
-      >
+        <section 
+          style={{ 
+            backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop')`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover'
+          }}
+          className="relative w-full pt-40 pb-28 flex items-center justify-center bg-fixed shadow-2xl z-10"
+        >
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-slate-900/80 to-slate-900/95 backdrop-blur-sm"></div>
         
         <div className="relative z-10 mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 text-center">
@@ -175,7 +198,7 @@ export default function App() {
           <aside className="w-full lg:w-[320px] shrink-0 lg:sticky lg:top-32 self-start z-20 flex flex-col gap-6">
             
             {/* Search Box */}
-            <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 border border-white shadow-xl shadow-slate-200/50 relative overflow-hidden">
+            <div className="bg-gradient-to-br from-blue-50/90 via-white/80 to-purple-50/90 backdrop-blur-xl rounded-3xl p-6 border border-white/80 shadow-xl shadow-slate-200/50 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
               <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <Search size={14} className="text-blue-500" /> Global Search
@@ -192,7 +215,7 @@ export default function App() {
             </div>
 
             {/* Filter Categories */}
-            <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 border border-white shadow-xl shadow-slate-200/50 hidden lg:block">
+            <div className="bg-gradient-to-br from-blue-50/90 via-white/80 to-purple-50/90 backdrop-blur-xl rounded-3xl p-6 border border-white/80 shadow-xl shadow-slate-200/50 hidden lg:block">
               <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <SlidersHorizontal size={14} className="text-purple-500" /> Environments
               </h3>
@@ -221,15 +244,15 @@ export default function App() {
               {filteredProjects.length > 0 ? (
                 <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {filteredProjects.map((project, idx) => (
-                    <motion.div
-                      layout
-                      initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.4, delay: idx * 0.05 }}
-                      key={project.title}
-                      className="flex flex-col justify-between overflow-hidden rounded-[2rem] bg-white/90 backdrop-blur-sm border border-white shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1.5 transition-all duration-500 group relative"
-                    >
+                   <motion.div
+  layout
+  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+  animate={{ opacity: 1, scale: 1, y: 0 }}
+  exit={{ opacity: 0, scale: 0.95 }}
+  transition={{ duration: 0.4, delay: idx * 0.05 }}
+  key={project.title}
+ className="flex flex-col justify-between overflow-hidden rounded-[2rem] bg-gradient-to-br from-purple-50/90 via-white/80 to-blue-50/90 backdrop-blur-sm border border-blue-100/80 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-pink-900/10 hover:-translate-y-1.5 transition-all duration-100 group relative"
+ >
                       {/* Gradient Hover Border */}
                       <div className="absolute inset-0 rounded-[2rem] border-2 border-transparent group-hover:border-blue-400/30 transition-colors duration-500 pointer-events-none"></div>
 
